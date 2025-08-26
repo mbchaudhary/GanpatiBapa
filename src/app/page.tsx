@@ -33,6 +33,8 @@ import divo from "@/assets/divo.gif";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 
+import logo from "@/assets/ullas-icon-blue.svg"
+
 // Add this interface definition before the AnimatedDivo component
 interface AnimatedDivoProps {
   isActive: boolean;
@@ -553,12 +555,29 @@ export default function Home() {
     const trimmed = nameInput.trim();
     if (!trimmed) return;
 
-    const blessings = [
-      `${trimmed}, Ganpati Bappa aapko sukh aur samriddhi dein 🙏`,
-      `${trimmed}, aapki sari manokamna poori ho. 🌺`,
-      `${trimmed}, bhakti aur shanti sadha bana rahe. 🕉️`,
-      `${trimmed}, dhan, arogya aur khushiyo se jeevan bhara rahe. 🌟`,
-    ];
+ const blessings = [
+  `${trimmed}, Ganpati Bappa aapko sukh aur samriddhi dein.`,
+  `${trimmed}, aapki sari manokamna poori ho. 🌺`,
+  `${trimmed}, bhakti aur shanti sadha bana rahe. 🕉️`,
+  `${trimmed}, dhan, arogya aur khushiyo se jeevan bhara rahe.`,
+  `${trimmed}, Ganesha ji aapko har mushkil se door rakhein.`,
+  `${trimmed}, aapki zindagi mein nayi umeed aur utsah aaye.`,
+  `${trimmed}, aapke ghar mein sukh-shanti ka vaas ho.`,
+  `${trimmed}, Ganesha ji ke ashirwad se har kaam safal ho.`,
+  `${trimmed}, aapki zindagi roshni se jagmagati rahe.`,
+  `${trimmed}, aap hamesha swasth aur prasann rahe.`,
+  `${trimmed}, dosti aur prem ke rishton mein madhurta bani rahe.`,
+  `${trimmed}, Ganpati ji aapko nayi soch aur pragati ka vardaan dein.`,
+  `${trimmed}, aapke din anand aur utsah se bhare rahe.`,
+  `${trimmed}, Ganesh ji aapke ghar ko unnati aur samriddhi se bharein.`,
+  `${trimmed}, aapke sapne sach ho aur jeevan khushiyo se mehke.`,
+  `${trimmed}, har nayi shuruaat mein Ganpati ji ka ashirwad rahe.`,
+  `${trimmed}, aapke parivaar mein sada prem aur ekta bani rahe.`,
+  `${trimmed}, aapke jeevan ka har din utsav jaisa rahe.`,
+  `${trimmed}, Ganesh ji aapko vijay aur pratishtha se nawazein.`,
+  `${trimmed}, aapke mann mein hamesha vishwas aur shakti bani rahe.`,
+];
+
 
     const randomBlessing =
       blessings[Math.floor(Math.random() * blessings.length)];
@@ -623,6 +642,18 @@ export default function Home() {
         : 'from-orange-50 via-yellow-25 to-rose-50'
     } flex flex-col md:flex-row overflow-x-hidden relative font-sans transition-all duration-1000`}>
       
+      {/* LOGO - Fixed position in top left corner */}
+      <div className="fixed top-4 left-7 z-40 p-2 shadow-sm">
+        <Image
+          src={logo}
+          alt="Logo"
+          width={80}
+          height={40}
+          className="w-16 h-10 md:w-20 md:h-20 object-contain"
+        />
+      </div>
+
+      
       {/* LEFT SIDE PUJA FEATURES - Responsive width */}
       <aside className="w-full md:w-[10%] bg-white/40 backdrop-blur-xl border-b md:border-b-0 md:border-r border-rose-100 p-2 flex flex-row md:flex-col gap-2 md:gap-3 items-center justify-center md:justify-center order-2 md:order-1">
         <Button
@@ -680,20 +711,6 @@ export default function Home() {
               />
             </motion.div>
 
-            {/* Image Indicators */}
-            <div className="flex justify-center mt-3 gap-2">
-              {images.map((_, index) => (
-                <button
-                  key={index}
-                  onClick={() => setCurrentImageIndex(index)}
-                  className={`w-2 h-2 md:w-3 md:h-3 rounded-full transition-all ${
-                    index === currentImageIndex 
-                      ? 'bg-rose-500 scale-125' 
-                      : 'bg-rose-300 hover:bg-rose-400'
-                  }`}
-                />
-              ))}
-            </div>
           </div>
 
           {/* Title and Description - Responsive text */}
@@ -880,19 +897,6 @@ export default function Home() {
         {isEveningMode && <ContinuousFlowerAnimation />}
       </AnimatePresence>
 
-      {/* Mantra Banner - Responsive */}
-      <AnimatePresence>
-        {showMantra && (
-          <motion.div
-            initial={{ opacity: 0, y: 40 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: 40 }}
-            className="fixed bottom-4 md:bottom-28 left-1/2 -translate-x-1/2 bg-gradient-to-r from-amber-400 via-rose-400 to-orange-500 px-4 md:px-8 py-2 md:py-3 rounded-full shadow-xl text-base md:text-lg font-bold text-white z-40"
-          >
-            🎉 Ganpati Bappa Morya! 🎉
-          </motion.div>
-        )}
-      </AnimatePresence>
     </main>
   );
 }
