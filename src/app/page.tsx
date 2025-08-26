@@ -44,11 +44,11 @@ interface AnimatedDivoProps {
 }
 
 // Updated AnimatedDivo component with proper internal rotation - fixed nested motion
-const AnimatedDivo: React.FC<AnimatedDivoProps> = ({ 
-  isActive, 
-  startPosition, 
-  targetPosition, 
-  onComplete 
+const AnimatedDivo: React.FC<AnimatedDivoProps> = ({
+  isActive,
+  startPosition,
+  targetPosition,
+  onComplete
 }) => {
   if (!isActive) return null;
 
@@ -120,7 +120,7 @@ const AnimatedDivo: React.FC<AnimatedDivoProps> = ({
           className="object-contain drop-shadow-lg"
         />
       </div>
-      
+
       {/* Enhanced Glow effect */}
       <motion.div
         className="absolute inset-0 bg-yellow-400 rounded-full blur-lg"
@@ -310,15 +310,15 @@ export default function Home() {
   const [nameInput, setNameInput] = useState("");
   const [showQR, setShowQR] = useState(false);
   const [qrCountdown, setQrCountdown] = useState(0);
-  
+
   // 🖼️ Image slider states
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
-  
+
   // ✨ Animation states for features
   const [showIncense, setShowIncense] = useState(false);
   const [showStars, setShowStars] = useState(false);
   const [isEveningMode, setIsEveningMode] = useState(false);
-  
+
   // 🪔 Divo animation states
   const [divoAnimation, setDivoAnimation] = useState({
     isActive: false,
@@ -326,7 +326,7 @@ export default function Home() {
     targetPosition: { x: 0, y: 0 },
     id: 0
   });
-  
+
   const images = [img, img2, img3, img4, img5];
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const speechRef = useRef<SpeechSynthesis | null>(null);
@@ -398,7 +398,7 @@ export default function Home() {
       document.body.style.overflow = "hidden";
       document.documentElement.style.overflow = "hidden";
     }
-    
+
     return () => {
       if (typeof window !== "undefined") {
         document.body.style.overflow = "auto";
@@ -410,7 +410,7 @@ export default function Home() {
   // 🔄 Auto slider effect
   useEffect(() => {
     if (!isClient) return;
-    
+
     const sliderInterval = setInterval(() => {
       setCurrentImageIndex((prev) => (prev + 1) % images.length);
     }, 4000);
@@ -454,7 +454,7 @@ export default function Home() {
   // Enhanced puja feature functions with divo animation
   const lightDiya = (e: React.MouseEvent<HTMLButtonElement>) => {
     triggerDivoAnimation(e.currentTarget);
-    
+
     if (speechRef.current) {
       const utterance = new SpeechSynthesisUtterance("Diya jalaya gaya hai, Ganpati Bappa ki jai!");
       utterance.lang = "hi-IN";
@@ -464,7 +464,7 @@ export default function Home() {
 
   const offerPrayers = (e: React.MouseEvent<HTMLButtonElement>) => {
     triggerDivoAnimation(e.currentTarget);
-    
+
     if (speechRef.current) {
       const utterance = new SpeechSynthesisUtterance("Prarthana arpan ki gayi hai");
       utterance.lang = "hi-IN";
@@ -474,7 +474,7 @@ export default function Home() {
 
   const ringBell = (e: React.MouseEvent<HTMLButtonElement>) => {
     triggerDivoAnimation(e.currentTarget);
-    
+
     if (speechRef.current) {
       const utterance = new SpeechSynthesisUtterance("Mandir ki ghanti baji");
       utterance.lang = "hi-IN";
@@ -484,7 +484,7 @@ export default function Home() {
 
   const chantMantra = (e: React.MouseEvent<HTMLButtonElement>) => {
     triggerDivoAnimation(e.currentTarget);
-    
+
     const mantra = "Om Gam Ganapataye Namaha";
     if (speechRef.current) {
       const utterance = new SpeechSynthesisUtterance(mantra);
@@ -498,7 +498,7 @@ export default function Home() {
     triggerDivoAnimation(e.currentTarget);
     setShowIncense(true);
     setTimeout(() => setShowIncense(false), 5000);
-    
+
     if (speechRef.current) {
       const utterance = new SpeechSynthesisUtterance("Dhoop jalai gayi hai");
       utterance.lang = "hi-IN";
@@ -509,12 +509,12 @@ export default function Home() {
   const eveningPrayer = (e: React.MouseEvent<HTMLButtonElement>) => {
     triggerDivoAnimation(e.currentTarget);
     setIsEveningMode(!isEveningMode);
-    
+
     if (!isEveningMode) {
       setShowFlowers(true);
       setTimeout(() => setShowFlowers(false), 3000);
     }
-    
+
     if (speechRef.current) {
       const utterance = new SpeechSynthesisUtterance(
         isEveningMode ? "Sandhya aarti samapti" : "Sandhya aarti aarambh"
@@ -526,10 +526,10 @@ export default function Home() {
 
   const divineBlessing = (e: React.MouseEvent<HTMLButtonElement>) => {
     triggerDivoAnimation(e.currentTarget);
-    
+
     setShowBlessing(true);
     setBlessingText("Ganpati Bappa ka aashirwad aap par sadaiv bana rahe! ⚡");
-    
+
     if (speechRef.current) {
       const utterance = new SpeechSynthesisUtterance("Ganpati Bappa ka divya aashirwad");
       utterance.lang = "hi-IN";
@@ -541,7 +541,7 @@ export default function Home() {
     triggerDivoAnimation(e.currentTarget);
     setShowStars(true);
     setTimeout(() => setShowStars(false), 4000);
-    
+
     if (speechRef.current) {
       const utterance = new SpeechSynthesisUtterance("Aapki manokamna poori ho, Ganpati Bappa Morya!");
       utterance.lang = "hi-IN";
@@ -555,29 +555,28 @@ export default function Home() {
     const trimmed = nameInput.trim();
     if (!trimmed) return;
 
- const blessings = [
-  `${trimmed}, Ganpati Bappa aapko sukh aur samriddhi dein.`,
-  `${trimmed}, aapki sari manokamna poori ho. 🌺`,
-  `${trimmed}, bhakti aur shanti sadha bana rahe. 🕉️`,
-  `${trimmed}, dhan, arogya aur khushiyo se jeevan bhara rahe.`,
-  `${trimmed}, Ganesha ji aapko har mushkil se door rakhein.`,
-  `${trimmed}, aapki zindagi mein nayi umeed aur utsah aaye.`,
-  `${trimmed}, aapke ghar mein sukh-shanti ka vaas ho.`,
-  `${trimmed}, Ganesha ji ke ashirwad se har kaam safal ho.`,
-  `${trimmed}, aapki zindagi roshni se jagmagati rahe.`,
-  `${trimmed}, aap hamesha swasth aur prasann rahe.`,
-  `${trimmed}, dosti aur prem ke rishton mein madhurta bani rahe.`,
-  `${trimmed}, Ganpati ji aapko nayi soch aur pragati ka vardaan dein.`,
-  `${trimmed}, aapke din anand aur utsah se bhare rahe.`,
-  `${trimmed}, Ganesh ji aapke ghar ko unnati aur samriddhi se bharein.`,
-  `${trimmed}, aapke sapne sach ho aur jeevan khushiyo se mehke.`,
-  `${trimmed}, har nayi shuruaat mein Ganpati ji ka ashirwad rahe.`,
-  `${trimmed}, aapke parivaar mein sada prem aur ekta bani rahe.`,
-  `${trimmed}, aapke jeevan ka har din utsav jaisa rahe.`,
-  `${trimmed}, Ganesh ji aapko vijay aur pratishtha se nawazein.`,
-  `${trimmed}, aapke mann mein hamesha vishwas aur shakti bani rahe.`,
-];
-
+    const blessings = [
+      `${trimmed}, Ganpati Bappa aapko sukh aur samriddhi dein.`,
+      `${trimmed}, aapki sari manokamna poori ho. 🌺`,
+      `${trimmed}, bhakti aur shanti sadha bana rahe. 🕉️`,
+      `${trimmed}, dhan, arogya aur khushiyo se jeevan bhara rahe.`,
+      `${trimmed}, Ganesha ji aapko har mushkil se door rakhein.`,
+      `${trimmed}, aapki zindagi mein nayi umeed aur utsah aaye.`,
+      `${trimmed}, aapke ghar mein sukh-shanti ka vaas ho.`,
+      `${trimmed}, Ganesha ji ke ashirwad se har kaam safal ho.`,
+      `${trimmed}, aapki zindagi roshni se jagmagati rahe.`,
+      `${trimmed}, aap hamesha swasth aur prasann rahe.`,
+      `${trimmed}, dosti aur prem ke rishton mein madhurta bani rahe.`,
+      `${trimmed}, Ganpati ji aapko nayi soch aur pragati ka vardaan dein.`,
+      `${trimmed}, aapke din anand aur utsah se bhare rahe.`,
+      `${trimmed}, Ganesh ji aapke ghar ko unnati aur samriddhi se bharein.`,
+      `${trimmed}, aapke sapne sach ho aur jeevan khushiyo se mehke.`,
+      `${trimmed}, har nayi shuruaat mein Ganpati ji ka ashirwad rahe.`,
+      `${trimmed}, aapke parivaar mein sada prem aur ekta bani rahe.`,
+      `${trimmed}, aapke jeevan ka har din utsav jaisa rahe.`,
+      `${trimmed}, Ganesh ji aapko vijay aur pratishtha se nawazein.`,
+      `${trimmed}, aapke mann mein hamesha vishwas aur shakti bani rahe.`,
+    ];
 
     const randomBlessing =
       blessings[Math.floor(Math.random() * blessings.length)];
@@ -628,22 +627,21 @@ export default function Home() {
   const formatTime = (date: Date | null) =>
     date
       ? date.toLocaleTimeString("en-US", {
-          hour12: true,
-          hour: "2-digit",
-          minute: "2-digit",
-          second: "2-digit",
-        })
+        hour12: true,
+        hour: "2-digit",
+        minute: "2-digit",
+        second: "2-digit",
+      })
       : "---";
 
   return (
-    <main className={`min-h-screen bg-gradient-to-br ${
-      isEveningMode 
-        ? 'from-purple-100 via-indigo-50 to-blue-100' 
+    <main className={`min-h-screen bg-gradient-to-br ${isEveningMode
+        ? 'from-purple-100 via-indigo-50 to-blue-100'
         : 'from-orange-50 via-yellow-25 to-rose-50'
-    } flex flex-col md:flex-row overflow-x-hidden relative font-sans transition-all duration-1000`}>
-      
+      } flex flex-col md:flex-row overflow-x-hidden relative font-sans transition-all duration-1000`}>
+
       {/* LOGO - Fixed position in top left corner */}
-      <div className="fixed top-4 left-7 z-40 p-2 shadow-sm">
+      <div className="fixed top-[10px] left-7 z-40 p-2 shadow-sm">
         <Image
           src={logo}
           alt="Logo"
@@ -653,47 +651,46 @@ export default function Home() {
         />
       </div>
 
-      
-      {/* LEFT SIDE PUJA FEATURES - Responsive width */}
-      <aside className="w-full md:w-[10%] bg-white/40 backdrop-blur-xl border-b md:border-b-0 md:border-r border-rose-100 p-2 flex flex-row md:flex-col gap-2 md:gap-3 items-center justify-center md:justify-center order-2 md:order-1">
+      {/* LEFT SIDE PUJA FEATURES - Hidden on mobile, visible on desktop */}
+      <aside className="hidden md:flex w-[10%] bg-white/40 backdrop-blur-xl border-r border-rose-100 p-2 flex-col gap-3 items-center justify-center order-1">
         <Button
           onClick={lightDiya}
-          className="w-10 h-10 md:w-12 md:h-12 rounded-full bg-gradient-to-r from-orange-400 to-red-500 text-white shadow-lg hover:scale-105 transition-transform p-0"
+          className="w-12 h-12 rounded-full bg-gradient-to-r from-orange-400 to-red-500 text-white shadow-lg hover:scale-105 transition-transform p-0"
           title="Light Diya"
         >
-          <Flame className="w-4 h-4 md:w-5 md:h-5" />
+          <Flame className="w-5 h-5" />
         </Button>
-        
+
         <Button
           onClick={offerPrayers}
-          className="w-10 h-10 md:w-12 md:h-12 rounded-full bg-gradient-to-r from-pink-400 to-rose-500 text-white shadow-lg hover:scale-105 transition-transform p-0"
+          className="w-12 h-12 rounded-full bg-gradient-to-r from-pink-400 to-rose-500 text-white shadow-lg hover:scale-105 transition-transform p-0"
           title="Offer Prayers"
         >
-          <Heart className="w-4 h-4 md:w-5 md:h-5" />
+          <Heart className="w-5 h-5" />
         </Button>
-        
+
         <Button
           onClick={ringBell}
-          className="w-10 h-10 md:w-12 md:h-12 rounded-full bg-gradient-to-r from-yellow-400 to-amber-500 text-white shadow-lg hover:scale-105 transition-transform p-0"
+          className="w-12 h-12 rounded-full bg-gradient-to-r from-yellow-400 to-amber-500 text-white shadow-lg hover:scale-105 transition-transform p-0"
           title="Ring Bell"
         >
-          <Bell className="w-4 h-4 md:w-5 md:h-5" />
+          <Bell className="w-5 h-5" />
         </Button>
-        
+
         <Button
           onClick={chantMantra}
-          className="w-10 h-10 md:w-12 md:h-12 rounded-full bg-gradient-to-r from-purple-400 to-indigo-500 text-white shadow-lg hover:scale-105 transition-transform p-0"
+          className="w-12 h-12 rounded-full bg-gradient-to-r from-purple-400 to-indigo-500 text-white shadow-lg hover:scale-105 transition-transform p-0"
           title="Chant Mantra"
         >
-          <Sparkles className="w-4 h-4 md:w-5 md:h-5" />
+          <Sparkles className="w-5 h-5" />
         </Button>
       </aside>
 
       {/* MAIN CONTENT AREA - Responsive layout */}
       <section className="flex-1 flex flex-col order-1 md:order-2">
-        
+
         {/* IMAGE AREA - Responsive height */}
-        <div className="flex-1 flex flex-col items-center justify-center px-4 md:px-6 py-4 md:py-2 min-h-[60vh] md:min-h-[80vh]">
+        <div className="flex-1 flex flex-col items-center justify-center px-4 md:px-6 py-4 md:py-2">
           {/* Image Slider with ref for divo targeting */}
           <div className="relative" ref={ganpatiImageRef}>
             <motion.div
@@ -710,7 +707,6 @@ export default function Home() {
                 priority
               />
             </motion.div>
-
           </div>
 
           {/* Title and Description - Responsive text */}
@@ -720,6 +716,78 @@ export default function Home() {
           <p className="mt-2 max-w-2xl text-gray-600 text-sm sm:text-base md:text-lg text-center leading-relaxed px-4">
             Vighnaharta - The Remover of Obstacles, Giver of Success
           </p>
+        </div>
+
+        {/* MOBILE PUJA BUTTONS - Positioned right above bottom navbar */}
+        <div className="md:hidden bg-white/30 backdrop-blur-xl border-t border-rose-100 py-3 px-4">
+          <div className="grid grid-cols-4 gap-3 max-w-xs mx-auto">
+            <Button
+              onClick={lightDiya}
+              className="w-12 h-12 rounded-full bg-gradient-to-r from-orange-400 to-red-500 text-white shadow-lg hover:scale-105 transition-transform p-0"
+              title="Light Diya"
+            >
+              <Flame className="w-4 h-4" />
+            </Button>
+
+            <Button
+              onClick={offerPrayers}
+              className="w-12 h-12 rounded-full bg-gradient-to-r from-pink-400 to-rose-500 text-white shadow-lg hover:scale-105 transition-transform p-0"
+              title="Offer Prayers"
+            >
+              <Heart className="w-4 h-4" />
+            </Button>
+
+            <Button
+              onClick={ringBell}
+              className="w-12 h-12 rounded-full bg-gradient-to-r from-yellow-400 to-amber-500 text-white shadow-lg hover:scale-105 transition-transform p-0"
+              title="Ring Bell"
+            >
+              <Bell className="w-4 h-4" />
+            </Button>
+
+            <Button
+              onClick={chantMantra}
+              className="w-12 h-12 rounded-full bg-gradient-to-r from-purple-400 to-indigo-500 text-white shadow-lg hover:scale-105 transition-transform p-0"
+              title="Chant Mantra"
+            >
+              <Sparkles className="w-4 h-4" />
+            </Button>
+
+            <Button
+              onClick={lightIncense}
+              className="w-12 h-12 rounded-full bg-gradient-to-r from-blue-400 to-cyan-500 text-white shadow-lg hover:scale-105 transition-transform p-0"
+              title="Light Incense"
+            >
+              <Sun className="w-4 h-4" />
+            </Button>
+
+            <Button
+              onClick={eveningPrayer}
+              className={`w-12 h-12 rounded-full text-white shadow-lg hover:scale-105 transition-transform p-0 ${isEveningMode
+                  ? 'bg-gradient-to-r from-purple-600 to-indigo-600'
+                  : 'bg-gradient-to-r from-indigo-400 to-purple-500'
+                }`}
+              title="Evening Prayer"
+            >
+              <Moon className="w-4 h-4" />
+            </Button>
+
+            <Button
+              onClick={divineBlessing}
+              className="w-12 h-12 rounded-full bg-gradient-to-r from-green-400 to-teal-500 text-white shadow-lg hover:scale-105 transition-transform p-0"
+              title="Divine Blessing"
+            >
+              <Zap className="w-4 h-4" />
+            </Button>
+
+            <Button
+              onClick={makeWish}
+              className="w-12 h-12 rounded-full bg-gradient-to-r from-yellow-400 to-orange-400 text-white shadow-lg hover:scale-105 transition-transform p-0"
+              title="Make a Wish"
+            >
+              <Star className="w-4 h-4" />
+            </Button>
+          </div>
         </div>
 
         {/* BOTTOM NAVIGATION BAR - Responsive layout */}
@@ -749,11 +817,10 @@ export default function Home() {
             <div className="flex gap-2 justify-center">
               <Button
                 onClick={toggleAarti}
-                className={`rounded-xl font-semibold px-3 md:px-4 transition-all text-xs md:text-sm flex-1 md:flex-initial ${
-                  isAartiPlaying 
-                    ? 'bg-gradient-to-r from-green-500 to-emerald-500 text-white' 
+                className={`rounded-xl font-semibold px-3 md:px-4 transition-all text-xs md:text-sm flex-1 md:flex-initial ${isAartiPlaying
+                    ? 'bg-gradient-to-r from-green-500 to-emerald-500 text-white'
                     : 'bg-gradient-to-r from-amber-400 to-orange-500 text-white'
-                }`}
+                  }`}
               >
                 {isAartiPlaying ? (
                   <><Pause className="w-3 h-3 md:w-4 md:h-4 mr-1" /><span className="hidden sm:inline">Stop Aarti</span><span className="sm:hidden">Stop</span></>
@@ -778,42 +845,41 @@ export default function Home() {
         </nav>
       </section>
 
-      {/* RIGHT SIDE PUJA FEATURES - Same as left side responsive */}
-      <aside className="w-full md:w-[10%] bg-white/40 backdrop-blur-xl border-t md:border-t-0 md:border-l border-rose-100 p-2 flex flex-row md:flex-col gap-2 md:gap-3 items-center justify-center order-3">
+      {/* RIGHT SIDE PUJA FEATURES - Hidden on mobile, visible on desktop */}
+      <aside className="hidden md:flex w-[10%] bg-white/40 backdrop-blur-xl border-l border-rose-100 p-2 flex-col gap-3 items-center justify-center order-3">
         <Button
           onClick={lightIncense}
-          className="w-10 h-10 md:w-12 md:h-12 rounded-full bg-gradient-to-r from-blue-400 to-cyan-500 text-white shadow-lg hover:scale-105 transition-transform p-0"
+          className="w-12 h-12 rounded-full bg-gradient-to-r from-blue-400 to-cyan-500 text-white shadow-lg hover:scale-105 transition-transform p-0"
           title="Light Incense"
         >
-          <Sun className="w-4 h-4 md:w-5 md:h-5" />
+          <Sun className="w-5 h-5" />
         </Button>
-        
+
         <Button
           onClick={eveningPrayer}
-          className={`w-10 h-10 md:w-12 md:h-12 rounded-full text-white shadow-lg hover:scale-105 transition-transform p-0 ${
-            isEveningMode 
-              ? 'bg-gradient-to-r from-purple-600 to-indigo-600' 
+          className={`w-12 h-12 rounded-full text-white shadow-lg hover:scale-105 transition-transform p-0 ${isEveningMode
+              ? 'bg-gradient-to-r from-purple-600 to-indigo-600'
               : 'bg-gradient-to-r from-indigo-400 to-purple-500'
-          }`}
+            }`}
           title="Evening Prayer"
         >
-          <Moon className="w-4 h-4 md:w-5 md:h-5" />
+          <Moon className="w-5 h-5" />
         </Button>
-        
+
         <Button
           onClick={divineBlessing}
-          className="w-10 h-10 md:w-12 md:h-12 rounded-full bg-gradient-to-r from-green-400 to-teal-500 text-white shadow-lg hover:scale-105 transition-transform p-0"
+          className="w-12 h-12 rounded-full bg-gradient-to-r from-green-400 to-teal-500 text-white shadow-lg hover:scale-105 transition-transform p-0"
           title="Divine Blessing"
         >
-          <Zap className="w-4 h-4 md:w-5 md:h-5" />
+          <Zap className="w-5 h-5" />
         </Button>
-        
+
         <Button
           onClick={makeWish}
-          className="w-10 h-10 md:w-12 md:h-12 rounded-full bg-gradient-to-r from-yellow-400 to-orange-400 text-white shadow-lg hover:scale-105 transition-transform p-0"
+          className="w-12 h-12 rounded-full bg-gradient-to-r from-yellow-400 to-orange-400 text-white shadow-lg hover:scale-105 transition-transform p-0"
           title="Make a Wish"
         >
-          <Star className="w-4 h-4 md:w-5 md:h-5" />
+          <Star className="w-5 h-5" />
         </Button>
       </aside>
 
@@ -854,7 +920,7 @@ export default function Home() {
                   </p>
                   {isSpeaking && (
                     <div className="flex justify-center items-center gap-2 text-green-500">
-                      <Volume2 className="w-4 h-4 md:w-5 md:h-5 animate-pulse" /> 
+                      <Volume2 className="w-4 h-4 md:w-5 md:h-5 animate-pulse" />
                       <span className="font-medium text-sm md:text-base">Speaking blessing...</span>
                     </div>
                   )}
