@@ -43,6 +43,30 @@ interface AnimatedDivoProps {
   onComplete: () => void;
 }
 
+// Custom hook to toggle body scroll
+const useToggleBodyScroll = (isOpen: boolean) => {
+  useEffect(() => {
+    if (isOpen) {
+      // Prevent background scrolling when modal is open
+      const scrollY = window.scrollY;
+      document.body.style.position = 'fixed';
+      document.body.style.top = `-${scrollY}px`;
+      document.body.style.width = '100%';
+    } else {
+      // Restore scrolling when modal is closed
+      const scrollY = document.body.style.top;
+      document.body.style.position = '';
+      document.body.style.top = '';
+      window.scrollTo(0, parseInt(scrollY || '0') * -1);
+    }
+
+    return () => {
+      document.body.style.position = '';
+      document.body.style.top = '';
+    };
+  }, [isOpen]);
+};
+
 // Updated AnimatedDivo component with proper internal rotation - fixed nested motion
 const AnimatedDivo: React.FC<AnimatedDivoProps> = ({
   isActive,
@@ -333,6 +357,9 @@ export default function Home() {
   const voicesRef = useRef<SpeechSynthesisVoice[]>([]);
   const ganpatiImageRef = useRef<HTMLDivElement>(null);
 
+  // Use the custom hook to prevent body scroll when modal is open
+  useToggleBodyScroll(showBlessing);
+
   // Helper function to trigger divo animation
   const triggerDivoAnimation = (startElement: HTMLButtonElement) => {
     if (!ganpatiImageRef.current) return;
@@ -395,8 +422,9 @@ export default function Home() {
     setIsClient(true);
     if (typeof window !== "undefined") {
       speechRef.current = window.speechSynthesis;
-      document.body.style.overflow = "hidden";
-      document.documentElement.style.overflow = "hidden";
+      // REMOVED: Fixed overflow hidden that was preventing scroll
+      // document.body.style.overflow = "hidden";
+      // document.documentElement.style.overflow = "hidden";
     }
 
     return () => {
@@ -686,8 +714,8 @@ export default function Home() {
         </Button>
       </aside>
 
-      {/* MAIN CONTENT AREA - Responsive layout */}
-      <section className="flex-1 flex flex-col order-1 md:order-2">
+      {/* MAIN CONTENT AREA - Responsive layout with scrolling enabled */}
+      <section className="flex-1 flex flex-col order-1 md:order-2 overflow-y-auto">
 
         {/* IMAGE AREA - Responsive height */}
         <div className="flex-1 flex flex-col items-center justify-center px-4 md:px-6 py-4 md:py-2">
@@ -903,16 +931,16 @@ export default function Home() {
         />
       </AnimatePresence>
 
-      {/* Blessing Popup - Responsive */}
+      {/* Blessing Popup - Responsive with scrollable content */}
       <AnimatePresence>
         {showBlessing && (
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 flex items-center justify-center z-50 bg-black/30 backdrop-blur-md p-4"
+            className="fixed inset-0 flex items-center justify-center z-50 bg-black/30 backdrop-blur-md p-4 overflow-y-auto"
           >
-            <div className="bg-gradient-to-br from-amber-50 to-rose-25 rounded-3xl shadow-2xl p-6 md:p-8 w-full max-w-sm md:max-w-md">
+            <div className="bg-gradient-to-br from-amber-50 to-rose-25 rounded-3xl shadow-2xl p-6 md:p-8 w-full max-w-sm md:max-w-md max-h-[80vh] overflow-y-auto">
               {!showQR ? (
                 <>
                   <p className="text-center font-semibold text-lg md:text-xl text-gray-800 mb-4">
